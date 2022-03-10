@@ -1,21 +1,17 @@
 package com.company;
 
-import java.sql.SQLException;
-
 public class Main {
-    public static void main(String[] args){
-        SqlDatabaseService sqlDatabaseService = new SqlDatabaseService();
-        try {
-            sqlDatabaseService.initializeConnection();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) {
+        DatabaseService databaseService = new SqliteDb("jdbc:sqlite:database.db", "org.sqlite.JDBC");
+        databaseService.createEntity();
+        databaseService.insertData();
+        databaseService.readData();
+        databaseService.closeConnection();
 
-        NoSqlDatabaseService noSqlDatabaseService = new NoSqlDatabaseService();
-        noSqlDatabaseService.initializeConnection();
-        noSqlDatabaseService.createCollection();
-        noSqlDatabaseService.insertData();
-        noSqlDatabaseService.readData();
-        noSqlDatabaseService.closeConnection();
+        databaseService = new MongoDb("localhost", 27017, "test");
+        databaseService.createEntity();
+        databaseService.insertData();
+        databaseService.readData();
+        databaseService.closeConnection();
     }
 }
