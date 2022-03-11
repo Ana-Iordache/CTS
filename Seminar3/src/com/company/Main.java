@@ -17,19 +17,5 @@ public class Main {
                 .newInstance("localhost", 27017, "test");
         orchestrator = new Orchestrator(databaseManager);
         orchestrator.execute();
-
-//        DatabaseManager databaseManager = new SqliteDb("jdbc:sqlite:database.db");
-//        databaseManager.openConnection();
-//        databaseManager.createEntity();
-//        databaseManager.insertData();
-//        databaseManager.readData();
-//        databaseManager.closeConnection();
-//
-//        databaseManager = new MongoDb("localhost", 27017, "test");
-//        databaseManager.openConnection();
-//        databaseManager.createEntity();
-//        databaseManager.insertData();
-//        databaseManager.readData();
-//        databaseManager.closeConnection();
     }
 }
