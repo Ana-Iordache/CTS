@@ -1,6 +1,5 @@
 package com.company;
 
-import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,19 +7,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class SqliteDb implements DatabaseService {
+public class SqliteDb implements DatabaseManager {
+    private static final String PACKAGE_NAME = "org.sqlite.JDBC";
     private Connection connection;
     private Statement statement;
+    private String urlConnection;
 
-    public SqliteDb(String urlConnection, String packageName) {
+    public SqliteDb(String urlConnection) {
+        this.urlConnection = urlConnection;
+    }
+
+    @Override
+    public void openConnection() {
         try {
-            Class.forName(packageName);
+            Class.forName(PACKAGE_NAME);
             this.connection = DriverManager.getConnection(urlConnection);
             this.connection.setAutoCommit(false);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -98,10 +103,4 @@ public class SqliteDb implements DatabaseService {
         }
     }
 
-    //TODO oare merge asa? nu cred
-//    @Override
-//    public void close(){
-//        connection.close();
-//        System.out.println("Connection closed!");
-//    }
 }

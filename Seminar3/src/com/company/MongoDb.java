@@ -6,17 +6,27 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-public class MongoDb implements DatabaseService {
-    MongoDatabase mongoDb;
-    MongoClient mongoClient;
+public class MongoDb implements DatabaseManager {
+    private final String host;
+    private final String databaseName;
+    private final int port;
+    private MongoDatabase mongoDb;
+    private MongoClient mongoClient;
 
     public MongoDb(String host, int port, String databaseName) {
+        this.host = host;
+        this.port = port;
+        this.databaseName = databaseName;
+    }
+
+    @Override
+    public void openConnection() {
         mongoClient = new MongoClient(host, port);
-        mongoDb = mongoClient.getDatabase(databaseName);
     }
 
     @Override
     public void createEntity() {
+        mongoDb = mongoClient.getDatabase(databaseName);
         if (mongoDb.getCollection("employees") != null) {
             mongoDb.getCollection("employees").drop();
         }

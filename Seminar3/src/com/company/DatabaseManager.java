@@ -1,6 +1,8 @@
 package com.company;
 
-public interface DatabaseService {
+public interface DatabaseManager {
+    void openConnection();
+
     void createEntity();
 
     void insertData();
@@ -8,4 +10,5 @@ public interface DatabaseService {
     void readData();
 
     void closeConnection();
+
 }
